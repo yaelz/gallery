@@ -1,5 +1,6 @@
 "use strict";
-function GL() {}
+//function GL() {}
+var GL = {};
 
 GL.createDiv = function createDiv(className) {
 //    className = className || "gl-item-title";
@@ -16,12 +17,12 @@ GL.createBtn = function createBtn(text, dataID, onClickMethod) {
     return btn;
 };
 
-function createImg(imgSrc) {
+GL.createImg = function createImg(imgSrc) {
     var itemImg = new Image();
     itemImg.src = imgSrc;
     itemImg.alt = 'alt';
     return itemImg;
-}
+};
 
 GL.hideItem = function hideItem(element) {
     element.className = element.className + ' hidden';
@@ -42,7 +43,7 @@ GL.createItem = function createItem (imgSrc, itemId) {
     itemTitle.textContent = "Item Title";
     galleryItem.appendChild(itemTitle);
 
-    var itemImg = createImg(imgSrc);
+    var itemImg = GL.createImg(imgSrc);
     galleryItem.appendChild(itemImg);
 
     var itemControls = GL.createDiv("gl-item-controls");
@@ -57,6 +58,9 @@ GL.createItem = function createItem (imgSrc, itemId) {
     return galleryItem;
 };
 
+GL.getImageUrl = function () {
+
+};
 
 GL.init = function init() {
     var cont = document.querySelector('.gl-items-container');

@@ -1,0 +1,19 @@
+{
+  "name": "gallery",
+  "version": "0.0.0",
+  "homepage": "https://github.com/yaelz/gallery",
+  "authors": [
+    "yaelz"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jasmine": "~1.3"
+  }
+}

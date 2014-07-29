@@ -7,10 +7,16 @@
     background-color: #33acfe;
     padding: 0.5px;
     margin-bottom: 2px;
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+.search-form {
+    display: inline-block;
 }
 
 .search-box {
-    align-content: flex-start;
+    display: inline-block;
 }
 
 .gl-gallery-item {
