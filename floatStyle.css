@@ -1,0 +1,28 @@
+header, footer {
+    color: #ffffff;
+    background-color: #001100;
+    padding: 20px 5px;
+    text-align: center;
+}
+
+.wrapper {
+    overflow: hidden;
+    border: solid 5px;
+    border-color: #009998;
+}
+
+.float-exe-content {
+    background-color: #33acfe;
+    display: table-cell;
+    width: 70%;
+}
+
+.float-exe-aside {
+    background-color: #888888;
+    display: table-cell;
+    width: 30%;
+}
+
+.content {
+    padding: 20px;
+}
