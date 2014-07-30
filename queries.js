@@ -1,4 +1,13 @@
 
+//    function walkTheDOM(node, func) {
+//        func(node);
+//        node = node.firstChild;
+//        while (node) {
+//            walkTheDOM(node, func);
+//            node = node.nextSibling;
+//        }
+//    }
+
     function jDomItem(element) {
         this.element = element;
     }
@@ -32,8 +41,26 @@
         return this;
     };
 
+    jDomItem.prototype.clone = function (isDeep) {
+        var newEl = this.element.cloneNode(isDeep)
+        return new jDomItem(newEl);
+    };
 
+    jDomItem.prototype.empty = function empty() {
+        var currChild = this.element.firstChild;
+        console.log('element: '+this.element.outerHTML);
+        while (currChild) {
+            console.log('child: '+currChild.outerHTML);
+            this.element.removeChild(currChild);
+            currChild = this.element.firstChild;
+        }
+        console.log('element: '+this.element.outerHTML);
+        return this;
+    };
+
+    //////////////////////////////////////////////////////////////////////////////////
     /////////////////////////// Collection ///////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
 
     function jDOMCollection(jDomItems) {
         this.nodes = jDomItems;
@@ -42,7 +69,8 @@
 
     jDOMCollection.prototype.each = function (func) {
         this.nodes.forEach(function(node) {
-            func.call(node);
+
+            func.call(node, arguments);
         });
         return this;
     };
@@ -80,8 +108,65 @@
         return this;
     };
 
-    jDOMCollection.prototype.hasAttr = function (attr) {;
+    jDOMCollection.prototype.hasAttr = function hasAttr(attr) {;
         return this.nodes[0].hasAttr(attr);
+    };
+
+    jDOMCollection.prototype.size = function size() {
+        return this.nodes.length;
+    };
+
+    jDOMCollection.prototype.remove = function remove() {
+        this.each(function(){
+            // TODO better to implement this in jDOMItem.remove?
+            this.element.parentNode.removeChild(this.element);
+        });
+        return this;
+    };
+
+    jDOMCollection.prototype.text = function text(txt) {
+        if (txt === undefined) {
+            return (this.nodes[0] && this.nodes[0].element.textContent) || '';
+        } else {
+            this.each(function () {
+                // TODO better to implement this in jDOMItem.text?
+               this.element.textContent = txt;
+
+            });
+            return this;
+        }
+    };
+
+    jDOMCollection.prototype.html = function html(html) {
+        if (html === undefined) {
+            return (this.nodes[0] && this.nodes[0].element.innerHTML) || '';
+        } else {
+            this.each(function () {
+                // TODO better to implement this in jDOMItem.text?
+                this.element.innerHTML = html;
+            });
+            return this;
+        }
+    };
+
+    jDOMCollection.prototype.clone = function clone(isDeep) {
+        //create new jDOMCollection
+        //each on this - create a new jDOM Item and push it into the jDOMCollection nodes
+        var newCollection = new jDOMCollection([]);
+        this.each(function () {
+            var newItem = this.clone(isDeep);
+            newCollection.nodes.push(newItem);
+        });
+        return newCollection;
+    };
+
+    jDOMCollection.prototype.empty = function empty () {
+//        console.log('000000000 '+this.nodes[0].element.innerHTML);
+        this.each(function () {
+//            console.log('22222222 '+this.element.innerHTML);
+            this.empty();
+        });
+        return this;
     };
 
     jDOMCollection.prototype.map = function () {};

@@ -4,7 +4,6 @@ function setup(){
     document.body.innerHTML = '<div>ABC</div>';
 }
 
-//setup();
 var div;
 
 describe("Queries Tests", function() {
@@ -72,11 +71,46 @@ describe("Queries Tests", function() {
         it("hasAttr should return true after adding an attribute", function() {
             div.addAttr('data-name', 'hi');
             expect(div.hasAttr('data-name')).toEqual(true);
-            console.log(div.nodes[0].element.getAttribute('data-name'));
             div.removeAttr('data-name');
-            console.log(div.nodes[0].element.getAttribute('data-name'));
             expect(div.hasAttr('data-name')).toEqual(false);
         });
+
+        it("return the number of elements in the jDOM collection", function() {
+            expect(div.size()).toEqual(1);
+        });
+
+
+        it("remove all child nodes of the set of matched elements from the DOM", function() {
+            div.remove();
+            expect(document.body.innerHTML).toEqual('');
+
+        });
+
+        it("Create a deep copy of the set of matched elements", function() {
+            expect(div.clone(true)).not.toBe(div);
+            expect(div.clone(true).nodes[0].element.innerHTML).toEqual(div.nodes[0].element.innerHTML);
+        });
+
+        it("Get the combined text contents of each element in the set of matched elements, including their descendants, or set the text contents of the matched elements", function() {
+            expect(div.text()).toEqual(div.nodes[0].element.textContent);
+            div.text('abc');
+            expect(div.nodes[0].element.textContent).toEqual('abc');
+        });
+
+        it("Get the HTML contents of the first element in the set of matched elements or set the HTML contents of every matched element", function() {
+            expect(div.html()).toEqual(div.nodes[0].element.innerHTML);
+            var newInnerHtml = '<p>HI!</p>'
+            div.html(newInnerHtml);
+            expect(div.nodes[0].element.innerHTML).toEqual(newInnerHtml);
+        });
+
+        it("Remove all child nodes of the set of matched elements from the DOM", function() {
+            var newInnerHtml = '<div><p>HI!</p></div>';
+            div.html(newInnerHtml);
+            div.empty();
+            expect(div.nodes[0].element.outerHTML).toEqual('<div></div>');
+        });
+
     });
 
 
