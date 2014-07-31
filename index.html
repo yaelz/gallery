@@ -6,13 +6,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class = "container">
+    </div>
     <header class="header">
         <div class="header-text"><h1>My Gallery</h1></div>
         <div class="extra">
             <form action="/search" method="post" class=" search-form">
                 <div class="search-box">
-                    Search: <input type="search" name="search">
-                    <input type="image" class="searchbutton" name="search" src="http://www.spheretekk.com/bc/images/search-icon.gif" alt="Search">
+                    Search: <input type="search" name="search" value="search here" id="search-results">
+                    <input type="image" class="search-button" name="search" src="http://www.spheretekk.com/bc/images/search-icon.gif" alt="Search">
                 </div>
                 <div class="audio-box">
                     <audio controls>
@@ -39,7 +41,11 @@
             <!--</div>-->
         <!--</div>-->
     </div>
-    <footer class="footer">This is the footer</footer>
+    <footer class="footer">{{item-name}}}
+        <div id="progress-outer">
+            <div id="progress-inner"></div>
+        </div>
+    </footer>
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>

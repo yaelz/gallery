@@ -59,13 +59,27 @@ GL.createItem = function createItem (imgSrc, itemId) {
 };
 
 GL.getImageUrl = function () {
+    //$('input[name="search"]');
+//    var searchResults = document.getElementsByName('search')[0].value;
+    var searchResults = document.getElementById('search-results').value;
+    /////
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', searchResults, true);
+    xhr.onload = GL.loadHandler;
+    xhr.send();
+};
 
+GL.loadHandler = function loadHandler (gotFromServer) {
+    console.log('aaaaaaaaaaaaaaaa ' + gotFromServer);
+};
+
+GL.addClass = function addClass(whereToAdd, classToAdd) {
+    $(whereToAdd).addClass("blue");
 };
 
 GL.init = function init() {
     var cont = document.querySelector('.gl-items-container');
     [1,2,3,4].forEach(function (item) {
-        console.log(item);
         cont.appendChild(GL.createItem('http://dummyimage.com/200x142/000/00ff48', item));
     });
 //    cont.appendChild(GL.createItem('http://dummyimage.com/200x142/000/00ff48'));
