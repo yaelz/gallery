@@ -12,27 +12,36 @@
     margin-left: 2px;
     border: 2px solid;
     border-radius: 25px;
+    overflow: hidden;
 }
 
 .header-text {
-    width: 70%;
+    /*width: 70%;*/
     display: table-cell;
+    float: left;
 }
 
 .extra {
-    width: 30%;
+    /*width: 30%;*/
     /*display: inline-block;*/
     position: relative;
     display: table-cell;
+    float: right;
+}
+
+.gl-items-container {
+    display: inline-block;
 }
 
 .gl-gallery-item {
     border: 2px solid #ffffff;
     width: 200px;
+    hight: 50px;
     padding-right: 8px;
     padding-left: 8px;
     position: relative;
     text-align: center;
+    color: #ffffff;
     display: inline-block;
     margin: 3px 5px 0 5px;
     /*text-align: center;*/
@@ -40,6 +49,7 @@
 
 .gl-item-image {
     width: 100%;
+    height: 100%;
 }
 
 .gl-item-controls button {

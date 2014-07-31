@@ -41,6 +41,10 @@
         return this;
     };
 
+    jDomItem.prototype.html = function html (newInnerHTML) {
+        this.element.innerHTML = newInnerHTML;
+    };
+
     jDomItem.prototype.clone = function (isDeep) {
         var newEl = this.element.cloneNode(isDeep)
         return new jDomItem(newEl);
@@ -48,28 +52,27 @@
 
     jDomItem.prototype.empty = function empty() {
         var currChild = this.element.firstChild;
-        console.log('element: '+this.element.outerHTML);
         while (currChild) {
-            console.log('child: '+currChild.outerHTML);
             this.element.removeChild(currChild);
             currChild = this.element.firstChild;
         }
-        console.log('element: '+this.element.outerHTML);
         return this;
     };
 
+//    jDomItem.prototype.next = function () {
+//        return this.element.nextSibling;
+//    };
     //////////////////////////////////////////////////////////////////////////////////
     /////////////////////////// Collection ///////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
 
     function jDOMCollection(jDomItems) {
-        this.nodes = jDomItems;
+        this.nodes = jDomItems || [];
     }
 
 
     jDOMCollection.prototype.each = function (func) {
         this.nodes.forEach(function(node) {
-
             func.call(node, arguments);
         });
         return this;
@@ -143,7 +146,7 @@
         } else {
             this.each(function () {
                 // TODO better to implement this in jDOMItem.text?
-                this.element.innerHTML = html;
+                this.html(html);
             });
             return this;
         }
@@ -152,7 +155,7 @@
     jDOMCollection.prototype.clone = function clone(isDeep) {
         //create new jDOMCollection
         //each on this - create a new jDOM Item and push it into the jDOMCollection nodes
-        var newCollection = new jDOMCollection([]);
+        var newCollection = new jDOMCollection();
         this.each(function () {
             var newItem = this.clone(isDeep);
             newCollection.nodes.push(newItem);
@@ -161,13 +164,48 @@
     };
 
     jDOMCollection.prototype.empty = function empty () {
-//        console.log('000000000 '+this.nodes[0].element.innerHTML);
         this.each(function () {
-//            console.log('22222222 '+this.element.innerHTML);
             this.empty();
         });
         return this;
     };
+
+    jDOMCollection.prototype.eq = function eq (idx) {
+        var idxToGet = this.nodes.length;
+        (idx < 0) ? idxToGet+=idx : idxToGet=idx;
+        var retColl;
+        if (idxToGet >= 0 && idxToGet < this.nodes.length) {
+            retColl = new jDOMCollection([this.nodes[idxToGet]]);
+        } else {
+            retColl = new jDOMCollection();
+        }
+        return retColl;
+    };
+
+    jDOMCollection.prototype.first = function first () {
+        return (this.nodes[0] && new jDOMCollection([this.nodes[0]])) || new jDOMCollection();
+    };
+
+    jDOMCollection.prototype.last = function last () {
+        var lastNodeIdx = this.nodes.length - 1;
+        return (this.nodes[lastNodeIdx] && new jDOMCollection([this.nodes[lastNodeIdx]])) || new jDOMCollection();
+    };
+
+//    jDOMCollection.prototype.append = function append (stringInnerHtml) {
+//        var newElem = document.createElement(stringInnerHtml);
+//
+//        return this;
+//    };
+//    jDOMCollection.prototype.next = function next () {
+//        var newColl = new jDOMCollection();
+//        this.each(function (){
+//            console.log(this.outerHTML);
+//            var next = this.next();
+//            console.log(next.outerHTML);
+//            newColl.nodes.push(next);
+//        });
+//        return newColl;
+//    };
 
     jDOMCollection.prototype.map = function () {};
     jDOMCollection.prototype.filter = function () {};

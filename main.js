@@ -1,6 +1,10 @@
 "use strict";
 //function GL() {}
-var GL = {};
+var GL = {
+    cont:'',
+    idxShown: 0,
+    numToPresentAt1Time: 10
+};
 
 GL.createDiv = function createDiv(className) {
 //    className = className || "gl-item-title";
@@ -40,7 +44,7 @@ GL.createItem = function createItem (imgSrc, itemId) {
     galleryItem.id = itemId;
 
     var itemTitle = GL.createDiv("gl-item-title");
-    itemTitle.textContent = "Item Title";
+    itemTitle.textContent = "{{Item Title}}";
     galleryItem.appendChild(itemTitle);
 
     var itemImg = GL.createImg(imgSrc);
@@ -49,28 +53,33 @@ GL.createItem = function createItem (imgSrc, itemId) {
     var itemControls = GL.createDiv("gl-item-controls");
     galleryItem.appendChild(itemControls);
 
-    var showImgBtn = GL.createBtn('Show image', itemId, function () {});
+    var showImgBtn = GL.createBtn('Edit', itemId, function () {});
     itemControls.appendChild(showImgBtn);
 
-    var closeBtn = GL.createBtn('Close', itemId, GL.removeItem);
+    var closeBtn = GL.createBtn('Remove', itemId, GL.removeItem);
     itemControls.appendChild(closeBtn);
 
     return galleryItem;
 };
 
 GL.getImageUrl = function () {
-    //$('input[name="search"]');
-//    var searchResults = document.getElementsByName('search')[0].value;
     var searchResults = document.getElementById('search-results').value;
-    /////
     var xhr = new XMLHttpRequest();
-    xhr.open('get', searchResults, true);
+    xhr.open('get', 'http://localhost:5000/search/'+searchResults, true);
     xhr.onload = GL.loadHandler;
     xhr.send();
 };
 
 GL.loadHandler = function loadHandler (gotFromServer) {
     console.log('aaaaaaaaaaaaaaaa ' + gotFromServer);
+    var response = gotFromServer.target.response;
+    var responseInJson = JSON.parse(response);
+    for (GL.idxShown = 0; GL.idxShown < GL.numToPresentAt1Time; GL.idxShown++) {
+        GL.cont.appendChild(GL.createItem(responseInJson[GL.idxShown].imgUrl, GL.idxShown));
+    }
+//    responseInJson.forEach(function (imgData) {
+//        createItem(imgData.imgUrl);
+//    });
 };
 
 GL.addClass = function addClass(whereToAdd, classToAdd) {
@@ -78,9 +87,9 @@ GL.addClass = function addClass(whereToAdd, classToAdd) {
 };
 
 GL.init = function init() {
-    var cont = document.querySelector('.gl-items-container');
+    GL.cont = document.querySelector('.gl-items-container');
     [1,2,3,4].forEach(function (item) {
-        cont.appendChild(GL.createItem('http://dummyimage.com/200x142/000/00ff48', item));
+        GL.cont.appendChild(GL.createItem('http://dummyimage.com/200x142/000/00ff48', item));
     });
 //    cont.appendChild(GL.createItem('http://dummyimage.com/200x142/000/00ff48'));
 //    cont.appendChild(GL.createItem('http://dummyimage.com/200x142/000/00ff48'));
