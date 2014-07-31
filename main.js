@@ -4,7 +4,8 @@ var GL = {
     cont:'',
     jsonItems: [],
     idxShown: 0,
-    numToPresentAt1Time: 20
+    numToPresentAt1Time: 20,
+    statusBar: 0
 };
 
 GL.createDiv = function createDiv(className) {
@@ -14,10 +15,9 @@ GL.createDiv = function createDiv(className) {
     return div;
 };
 
-GL.createBtn = function createBtn(text, itemID, className, onClickMethod) {
+GL.createBtn = function createBtn(text, itemID, className) {
     var btn = document.createElement('button');
     btn.dataset.id = itemID;
-    btn.onclick = onClickMethod;
     btn.textContent = text;
     btn.className = className;
     return btn;
@@ -25,10 +25,16 @@ GL.createBtn = function createBtn(text, itemID, className, onClickMethod) {
 
 GL.createImg = function createImg(imgSrc, className) {
     var itemImg = new Image();
-    itemImg.src = imgSrc;
+    itemImg.onerror = GL.onErrorImg;
     itemImg.alt = 'alt';
     itemImg.className = className;
+    itemImg.src = imgSrc;
     return itemImg;
+};
+
+GL.onErrorImg = function (event) {
+    var target = event.target;
+    target.src = 'http://upload.wikimedia.org/wikipedia/en/a/aa/Magic_the_gathering-card_back.jpg';
 };
 
 GL.hideItem = function hideItem(element) {
@@ -37,19 +43,23 @@ GL.hideItem = function hideItem(element) {
 
 GL.deligationOnBody = function deligationOnBody(event) {
     var target = event.target;
-    if (target.className.indexOf('gl-remove-btn') != -1) {
+
+    if (target.classList.contains('gl-remove-btn')) {
         GL.removeItem(event);
-    } else if (target.className.indexOf('gl-edit-btn') != -1) {
+    } else if (target.classList.contains('gl-edit-btn')) {
         GL.editItem(event);
-    } else if (target.className.indexOf('search-button') != -1) {
+    } else if (target.classList.contains('search-button')) {
         GL.getImageUrl();
-    } else if (target.className.indexOf('clear-button') != -1) {
+    } else if (target.classList.contains('clear-button')) {
         GL.clearAllImages();
-    } else if (target.className.indexOf('popup') != -1) {
+    } else if (target.classList.contains('popup')) {
         GL.hideItem(target);
-    } else if (target.className.indexOf('more-button') != -1) {
+    } else if (target.classList.contains('more-button')) {
         GL.addMoreImages();
+    } else if (target.classList.contains('gl-item-image')) {
+
     }
+
 };
 
 GL.removeItem = function removeItem(event) {
@@ -77,10 +87,10 @@ GL.createItem = function createItem (imgSrc, itemId) {
     var itemControls = GL.createDiv('gl-item-controls');
     galleryItem.appendChild(itemControls);
 
-    var showImgBtn = GL.createBtn('Edit', itemId, 'gl-edit-btn', function () {});
+    var showImgBtn = GL.createBtn('Edit', itemId, 'gl-edit-btn');
     itemControls.appendChild(showImgBtn);
 
-    var closeBtn = GL.createBtn('Remove', itemId, 'gl-remove-btn', GL.removeItem);
+    var closeBtn = GL.createBtn('Remove', itemId, 'gl-remove-btn');
     itemControls.appendChild(closeBtn);
 
     return galleryItem;
@@ -132,11 +142,20 @@ GL.addMoreImages = function addMoreImages () {
     for (GL.idxShown; GL.idxShown < GL.numToPresentAt1Time && GL.idxShown < GL.jsonItems.length; GL.idxShown++) {
         GL.cont.appendChild(GL.createItem(GL.jsonItems[GL.idxShown].imgUrl, GL.idxShown));
     }
-    GL.numToPresentAt1Time += GL.numToPresentAt1Time;
+    GL.numToPresentAt1Time+=GL.idxShown;
+    GL.changeStatusBar();
 };
 
 GL.addClass = function addClass(whereToAdd, classToAdd) {
     $(whereToAdd).addClass("blue");
+};
+
+GL.changeStatusBar = function changeStatusBar() {
+    if (GL.idxShown > GL.jsonItems.length) {
+        return;
+    }
+    GL.statusBar = GL.idxShown / GL.jsonItems.length;
+    document.getElementById('progress-inner').style.width = GL.statusBar*100 +'%';
 };
 
 GL.init = function init() {

@@ -24,7 +24,7 @@
     };
 
     jDomItem.prototype.hasClass = function (className) {
-        return this.element.className.match(className) !== null;
+        return this.element.classList.contains(className);
     };
 
     jDomItem.prototype.hasAttr = function (attr) {

@@ -6,13 +6,12 @@
 .header, .footer{
     color: #ffffff;
     background-color: #33acfe;
-    padding: 10px;
     margin-bottom: 2px;
     margin-top: 5px;
-    margin-left: 2px;
     border: 2px solid;
     border-radius: 25px;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .header-text {
@@ -83,8 +82,10 @@
 }
 
 .footer {
-    margin-left: auto;
-    margin-right: auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 #progress-outer {
@@ -99,7 +100,7 @@
 
 #progress-inner {
     background: #00008b;
-    width: 50%;
+    width: 0%;
     height: 100%;
     -webkit-border-radius: 9px;
 }
@@ -108,4 +109,8 @@ body
 {
     background-image:url('Background-1.jpg');
     background-color:#cccccc;
+}
+
+.inner {
+    padding: 10px;
 }

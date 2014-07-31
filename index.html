@@ -9,27 +9,27 @@
     <div class = "container">
     </div>
     <header class="header">
-        <div class="header-text"><h1>My Gallery</h1></div>
-        <div class="extra">
-            <!--<form action="/search" method="post" class=" search-form">-->
-                <div class="search-box">
-                    Search: <input type="search" name="search" value="search here" id="search-results">
-                    <input type="image" class="search-button" name="search" src="http://www.spheretekk.com/bc/images/search-icon.gif" alt="Search">
+        <div class="inner">
+            <div class="header-text"><h1>My Gallery</h1></div>
+            <div class="extra">
+                <!--<form action="/search" method="post" class=" search-form">-->
+                    <div class="search-box">
+                        Search: <input type="search" name="search" placeholder="search here" id="search-results">
+                        <input type="image" class="search-button" name="search" src="http://www.spheretekk.com/bc/images/search-icon.gif" alt="Search">
+                    </div>
+                    <div class="audio-box">
+                        <audio controls>
+                            <source src="song.mp3" type="audio/mpeg">
+                            <!--<source src="https://www.youtube.com/watch?v=I-i9Byoj_pk" type="audio/ogg">-->
+                            <embed height="50" width="100" src="song.mp3">
+                        </audio>
+                    </div>
+                <div>
+                    <button class="clear-button">Clear</button>
                 </div>
-                <div class="audio-box">
-                    <audio controls>
-                        <source src="song.mp3" type="audio/mpeg">
-                        <!--<source src="https://www.youtube.com/watch?v=I-i9Byoj_pk" type="audio/ogg">-->
-                        <embed height="50" width="100" src="song.mp3">
-                    </audio>
-                </div>
-            <div>
-                <button class="clear-button">Clear</button>
+                <!--</form>-->
             </div>
-            <!--</form>-->
         </div>
-
-
     </header>
     <div class="gl-items-container">
 
@@ -50,11 +50,19 @@
         <!--<button class="close-btn">Close</button>-->
     <!--</div>-->
 
-    <footer class="footer">{{item-name}}}
-        <div id="progress-outer">
-            <div id="progress-inner"></div>
+    <!--<div id="simplediv" style="background-color:yellow;border:1px solid black;display:none;width:200px;height:200px;">-->
+        <!--Click anywhere in the document to auto-close me-->
+    <!--</div>-->
+
+    <!--<a href="#" onclick="Popup.show('simplediv');return false;">Click Here To Show DIV</a>-->
+
+    <footer class="footer">
+        <div class="inner">
+            <div id="progress-outer">
+                <div id="progress-inner"></div>
+            </div>
+            <button class="more-button">More...</button>
         </div>
-        <button class="more-button">More...</button>
     </footer>
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="queries.js"></script>
