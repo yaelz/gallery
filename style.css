@@ -11,12 +11,16 @@
     border-radius: 25px;
 }
 
-.search-form {
-    display: inline-block;
+.header-text {
+    width: 70%;
+    display: table-cell;
 }
 
-.search-box {
-    display: inline-block;
+.extra {
+    width: 30%;
+    /*display: inline-block;*/
+    position: relative;
+    display: table-cell;
 }
 
 .gl-gallery-item {

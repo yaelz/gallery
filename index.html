@@ -7,13 +7,22 @@
 </head>
 <body>
     <header class="header">
-        <h1>My Gallery</h1>
-        <form action="/search" method="post" class="search-form">
-            <div class="search-box">
-                Search: <input type="search" name="search">
-                <input type="image" class="searchbutton" name="search" src="http://www.spheretekk.com/bc/images/search-icon.gif" alt="Search">
-            </div>
-        </form>
+        <div class="header-text"><h1>My Gallery</h1></div>
+        <div class="extra">
+            <form action="/search" method="post" class=" search-form">
+                <div class="search-box">
+                    Search: <input type="search" name="search">
+                    <input type="image" class="searchbutton" name="search" src="http://www.spheretekk.com/bc/images/search-icon.gif" alt="Search">
+                </div>
+                <div class="audio-box">
+                    <audio controls>
+                        <source src="song.mp3" type="audio/mpeg">
+                        <!--<source src="https://www.youtube.com/watch?v=I-i9Byoj_pk" type="audio/ogg">-->
+                        <embed height="50" width="100" src="song.mp3">
+                    </audio>
+                </div>
+            </form>
+        </div>
 
 
     </header>
